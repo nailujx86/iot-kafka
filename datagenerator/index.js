@@ -5,18 +5,25 @@ const uuid = uuidv4();
 console.log("Producer started, UUID: " + uuid);
 
 const kafka = new Kafka({
-    clientId: 'device-' + (Math.floor(Math.random()*100)),
+    clientId: 'device-' + uuid,
     brokers: ['kafka1:19091', 'kafka2:19092', 'kafka3:19093']
 })
 
 const producer = kafka.producer();
+const admin = kafka.admin();
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 const run = async () => {
-    await sleep(10000);
+    await admin.createTopics({
+        topics: [{
+            topic: "Topic1",
+            replicationFactor: 3
+        }],
+        waitForLeaders: true
+    })
     await producer.connect();
     for(var i = 0; i < 10; i++) {
         await producer.send({

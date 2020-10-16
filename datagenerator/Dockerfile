@@ -1,9 +1,14 @@
 FROM node:14-alpine
 WORKDIR /home/node/app
-RUN apk add --update bash g++ ca-certificates lz4-dev musl-dev cyrus-sasl-dev openssl-dev make python
+
+ENV WAIT_VERSION 2.7.3
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$WAIT_VERSION/wait /wait
+RUN chmod +x /wait
+
 RUN chown -R node:node /home/node/app
 COPY package*.json ./
 USER node
 RUN npm install
 COPY --chown=node:node . .
-CMD ["npm", "start"]
+
+CMD /wait && npm start
