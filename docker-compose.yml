@@ -58,10 +58,14 @@ services:
         build: ./datagenerator/
         image: nailuj/iot-datagenerator
         deploy:
-            replicas: 3
+            replicas: 64
         environment: 
             WAIT_HOSTS: kafka1:19091, kafka2:19092, kafka3:19093
             WAIT_HOSTS_TIMEOUT: 60
+        depends_on: 
+            - kafka1
+            - kafka2
+            - kafka3
     
     consumer:
         build: ./kafka-consumer/
@@ -69,4 +73,18 @@ services:
         environment:
             WAIT_HOSTS: kafka1:19091, kafka2:19092, kafka3:19093
             WAIT_HOSTS_TIMEOUT: 60
+        depends_on: 
+            - kafka1
+            - kafka2
+            - kafka3
+    
+    kafka-init:
+        build: ./kafka-init/
+        environment:
+            WAIT_HOSTS: kafka1:19091, kafka2:19092, kafka3:19093
+            WAIT_HOSTS_TIMEOUT: 60
+        depends_on:
+            - kafka1
+            - kafka2
+            - kafka3
         

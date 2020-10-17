@@ -17,13 +17,14 @@ function sleep(ms) {
 }
 
 const run = async () => {
-    await admin.createTopics({
-        topics: [{
-            topic: "Topic1",
-            replicationFactor: 3
-        }],
-        waitForLeaders: true
-    })
+    // await admin.createTopics({
+    //     topics: [{
+    //         topic: "Topic1",
+    //         replicationFactor: 3
+    //     }],
+    //     waitForLeaders: true
+    // }).catch();
+    await sleep(10);
     await producer.connect();
     for(var i = 0; i < 10; i++) {
         await producer.send({
