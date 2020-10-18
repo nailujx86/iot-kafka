@@ -54,11 +54,10 @@ services:
         depends_on:
             - zookeeper
 
-    datagenerator:
-        build: ./datagenerator/
-        image: nailuj/iot-datagenerator
+    staubdata:
+        build: ./datagenerator-feinstaub/
         deploy:
-            replicas: 64
+            replicas: 32
         environment: 
             WAIT_HOSTS: kafka1:19091, kafka2:19092, kafka3:19093
             WAIT_HOSTS_TIMEOUT: 60
@@ -66,7 +65,19 @@ services:
             - kafka1
             - kafka2
             - kafka3
-    
+
+    wetterdata:
+        build: ./datagenerator-wetter/
+        deploy:
+            replicas: 16
+        environment:
+            WAIT_HOSTS: kafka1:19091, kafka2:19092, kafka3:19093
+            WAIT_HOSTS_TIMEOUT: 60
+        depends_on:
+            - kafka1
+            - kafka2
+            - kafka3
+
     consumer:
         build: ./kafka-consumer/
         image: nailuj/iot-consumer

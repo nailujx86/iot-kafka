@@ -5,7 +5,7 @@ const uuid = uuidv4();
 console.log("Producer started, UUID: " + uuid);
 
 const kafka = new Kafka({
-    clientId: 'device-' + uuid,
+    clientId: 'wetter-' + uuid,
     brokers: ['kafka1:19091', 'kafka2:19092', 'kafka3:19093']
 })
 

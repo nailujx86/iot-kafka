@@ -1,7 +1,7 @@
 {
-  "name": "iot-kafka-consumer",
+  "name": "iot-kafka-feinstaub_generator",
   "version": "1.0.0",
-  "description": "Consumes Kafka Data",
+  "description": "Generates Feinstaub Data for Kafka",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/nailujx86/iot-kafka#readme",
   "dependencies": {
-    "kafkajs": "^1.14.0"
+    "kafkajs": "^1.14.0",
+    "random": "^2.2.0",
+    "uuid": "^8.3.1"
   }
 }
